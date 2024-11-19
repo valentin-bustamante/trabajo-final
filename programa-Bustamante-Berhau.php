@@ -1,6 +1,7 @@
 <?php
 include_once("wordix.php");
 
+//hola gaston
 
 /**************************************/
 /***** DATOS DE LOS INTEGRANTES *******/
