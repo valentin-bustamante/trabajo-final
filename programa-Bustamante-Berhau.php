@@ -145,6 +145,62 @@ function primerPartidaGanada($arreglo, $nombre){
 
 }
 
+/**
+ * FUNCION 9 que dada la colección de par das y el nombre de un jugador, retorne el resumen del jugador
+ * @return STRING
+ * **/
+function estadisticasJugador($nombre, $arreglo){
+    //array $stats
+    //int $intento1,$intento2,$intento3,$intento4,$intento5,$intento6,$totalPuntos,$totalPartidas,$cuenteo,$victorias
+    //float $porcentajeVictorias
+    $stats = [];
+    $cuenteo = count($arreglo);
+    $totalPartidas = 0;
+    $totalPuntos = 0;
+    $victorias = 0; 
+    $intento1 = 0;
+    $intento2 = 0;
+    $intento3 = 0;
+    $intento4 = 0;
+    $intento5 = 0;
+    $intento6 = 0;
+    for($i=0; $i < $cuenteo; $i++){
+        if($arreglo[$i]["jugador"] == $nombre) {
+            $totalPartidas++;
+            $totalPuntos = $totalPuntos + $arreglo[$i]["puntaje"];
+            if($arreglo[$i]["intentos"] == 1){
+                $intento1++;
+            } elseif($arreglo[$i]["intentos"] == 2){
+                $intento2++;
+            } elseif($arreglo[$i]["intentos"] == 3){
+                $intento3++;
+            } elseif($arreglo[$i]["intentos"] == 4){
+                $intento4++;
+            } elseif($arreglo[$i]["intentos"] == 5){
+                $intento5++;
+            } elseif($arreglo[$i]["intentos"] == 6){
+                $intento6++;
+            }
+                if($arreglo[$i]["puntaje"] > 0) { 
+                $victorias++;    
+      }
+    }
+  }
+$porcentajeVictorias = ($victorias * 100) / $totalPartidas; 
+$stats["jugador"] = $nombre;
+$stats["partidas"] = $totalPartidas;
+$stats["puntajeTotal"] = $totalPuntos;
+$stats["victorias"] = $victorias;
+$stats["porcentajeVictorias"] = $porcentajeVictorias;
+$stats["intento1"] = $intento1;
+$stats["intento2"] = $intento2;
+$stats["intento3"] = $intento3;
+$stats["intento4"] = $intento4;
+$stats["intento5"] = $intento5;
+$stats["intento6"] = $intento6;
+return $stats;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
