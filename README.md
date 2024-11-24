@@ -11,6 +11,7 @@ universidad nacional de comahue
 # integrantes del grupo
 
 **valentin bustamante** legajo FAI-5495 - mail: vbedits333@gmail.com - github: valentin-bustamante
+
 **Gaston Gabriel Berhau** legajo FAI 5585 - mail: gastonn.okk@gmail.com - github: gstNNN
 
 # numero de grupo

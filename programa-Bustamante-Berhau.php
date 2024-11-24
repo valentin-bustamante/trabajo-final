@@ -1,8 +1,6 @@
 <?php
 include_once("wordix.php");
 
-
-
 /**************************************/
 /***** DATOS DE LOS INTEGRANTES *******/
 /**************************************/
@@ -21,17 +19,13 @@ include_once("wordix.php");
  */
 function cargarColeccionPalabras()
 {
-    $coleccionPalabras = [
-        "MESSI", "QUESO", "FUEGO", "CASAS", "RASGO",
-        "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
-        "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
-        "NIEVE", "PAROS", "CINCO", "CAJON", "SILLA",
-    ];
-
-    return ($coleccionPalabras);
+    $coleccionPalabras = ["MESSI", "QUESO", "FUEGO", "CASAS", "RASGO",
+                          "GATOS", "GOTAS", "HUEVO", "TINTO", "NAVES",
+                          "VERDE", "MELON", "YUYOS", "PIANO", "PISOS",
+                          "NIEVE", "PAROS", "CINCO", "CAJON", "SILLA",
+];
+return ($coleccionPalabras);
 }
-
-/* ****COMPLETAR***** */
 
 /**
  * FUNCION 2: Una función llamada cargarPartidas, que inicializa una estructura de datos con ejemplos de Partidas
@@ -64,33 +58,66 @@ return $coleccionPartidas;
   */
 
 function seleccionarOpcion(){
+    echo"MENU \n\n";
+    echo"1- Jugar al wordix con una palabra elegida \n";
+    echo"2- Jugar al wordix con una palabra aleatoria \n";
+    echo"3- Mostrar una partida \n";
+    echo"4- Mostrar la primer partida ganadora \n";
+    echo"5- Mostrar resumen de Jugador \n";
+    echo"6- Mostrar listado de partidas ordenadas por jugador y por palabra \n";
+    echo"7- Agregar una palabra de 5 letras a Wordix \n";
+    echo"8- salir \n";
+    echo"opcion >>>: ";
 
+    $opcion = solicitarNumeroEntre(1, 8);
+
+    return $opcion;
 }
 
- /**
-  * FUNCION 4 (REUTILIZADA DE WORDIX.PHP): Una función que le pide al usuario ingresar una palabra de 5 letras, y retorna la palabra.
-  *
-  */
-$palabra = leerPalabra5Letras();
+//FUNCION 4 (REUTILIZADA DE WORDIX.PHP)
+
+//FUNCION 5 (REUTILIZADA DE WORDIX.PHP)
 
 /**
- * FUNCION 5 (REUTILIZADA DE WORDIX.PHP): Una función que solicita al usuario un número entre un rango de valores.
- *  Si el número ingresado por el usuario no es válido, la función se encarga de volver a pedirlo. La función retorna un número válido.
- * @return INT
+ * FUNCION 6 Una función que dado un número de partida, muestra en pantalla los datos de la partida.
+ * @param INT $numPartida
  */
 
-function numeroValido(){
-   $cantidadPartidas = cargarPartidas();
-   $elementos = count($cantidadPartidas);
-//    return solicitarNumeroEntre(1, );
+function mostrarPartida($numPartida){
+    $indice = $numPartida - 1;
+    $partidas = cargarPartidas();
 
+    echo"*********************************** \n";
+    echo"PARTIDA WORDIX " . $numPartida . ": palabra " . $partidas[$indice]["palabraWordix"] . "\n";
+    echo"jugador: " . $partidas[$indice]["jugador"] . "\n" ;
+    echo"puntaje: " . $partidas[$indice]["puntaje"] . " puntos \n";
+    if ($partidas[$indice]["intentos"] > 6) {
+        echo"intento: no adivino la palabra";
+    }
+    else {
+        echo"intento: adivino la palabra en " . $partidas[$indice]["intentos"] . " intentos \n" ;
+    }
+    echo"*********************************** \n";
 }
+
+/**
+ * FUNCION 7: Una función agregarPalabra cuya entrada es la colección de palabras y una palabra, 
+ * la función retorna la colección modificada al agregarse la nueva palabra.
+ * @param array $arreglo
+ * @param STRING $palabra
+ * @return array
+ */
+
+function agregarPalabra($arreglo, $palabra){
+    $arreglo[] = $palabra;
+    return $arreglo;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
 
 //Declaración de variables:
-
 
 //Inicialización de variables:
 $palabras = cargarColeccionPalabras();
@@ -102,28 +129,44 @@ $partidas = cargarPartidas();
 //print_r($partida);
 //imprimirResultado($partida);
 
-
-
-
 do {
-    $opcion = "";
+    $menu = seleccionarOpcion();
 
+    $opcion = $menu ;
     
     switch ($opcion) {
-        case 1: 
+        case '1': 
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 1
 
-            break;
-        case 2: 
+        break;
+        case '2': 
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
 
-            break;
-        case 3: 
+        break;
+        case '3': 
+            $elementos = count($partidas);
+            echo"ingrese un numero de partida para mostrar la misma por pantalla";
+            $numero = solicitarNumeroEntre(1, $elementos);
+           mostrarPartida($numero);
+        break;
+        case '4': 
             //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
 
-            break;
-        
-            //...
+        break;
+        case '5': 
+            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+
+        break;
+        case '6': 
+            
+
+        break;
+        case '7': 
+            echo"usted a elegido agregar una palabra a wordix :) \n";
+            $nuevaPalabra = leerPalabra5Letras();
+            $palabras = agregarPalabra($palabras, $nuevaPalabra);
+
+        break;     
     }
-} while ($opcion != "");
+} while ($opcion != 8);
 
