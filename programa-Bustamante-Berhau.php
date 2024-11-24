@@ -87,12 +87,12 @@ function mostrarPartida($numPartida){
     $indice = $numPartida - 1;
     $partidas = cargarPartidas();
 
-    echo"*********************************** \n";
+    echo" \n *********************************** \n";
     echo"PARTIDA WORDIX " . $numPartida . ": palabra " . $partidas[$indice]["palabraWordix"] . "\n";
     echo"jugador: " . $partidas[$indice]["jugador"] . "\n" ;
     echo"puntaje: " . $partidas[$indice]["puntaje"] . " puntos \n";
     if ($partidas[$indice]["intentos"] > 6) {
-        echo"intento: no adivino la palabra";
+        echo"intento: no adivino la palabra \n";
     }
     else {
         echo"intento: adivino la palabra en " . $partidas[$indice]["intentos"] . " intentos \n" ;
@@ -111,6 +111,38 @@ function mostrarPartida($numPartida){
 function agregarPalabra($arreglo, $palabra){
     $arreglo[] = $palabra;
     return $arreglo;
+}
+
+/**
+ * FUNCION 8: Una función que dada una colección de partidas y el nombre de un jugador, retorna el índice de la primer partida ganada por dicho jugador.
+ *  Si el jugador ganó ninguna parda, la función debe retornar el valor -1
+ * @param array
+ * @param STRING $nombre
+ * @return INT
+ */
+
+function primerPartidaGanada($arreglo, $nombre){
+    $partidas = cargarPartidas();
+    $resultado = -1;
+    $encontrado = false;
+    $elementos = count($partidas);
+    $i = 0;
+
+    while (!$encontrado && $i < $elementos) {
+        if ($partidas[$i]["jugador"] == $nombre) {
+            if ($partidas[$i]["intentos"] < 7 && $partidas[$i]["intentos"] > 0) {
+                $resultado = $i;
+                $encontrado = true;
+            }
+        }
+
+        $i++;
+
+    }
+
+    return $resultado;
+
+
 }
 
 /**************************************/
@@ -145,12 +177,20 @@ do {
         break;
         case '3': 
             $elementos = count($partidas);
-            echo"ingrese un numero de partida para mostrar la misma por pantalla";
+            echo"ingrese un numero de partida para mostrar la misma por pantalla: ";
             $numero = solicitarNumeroEntre(1, $elementos);
            mostrarPartida($numero);
         break;
         case '4': 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            echo"ingrese el nombre del jugador del cual desea visualizar su partida: ";
+            $nombre = trim(fgets(STDIN));
+            $indicePartidaGanadora = primerPartidaGanada($partidas , $nombre);
+            if ($indicePartidaGanadora == -1) {
+                echo"el jugador " . $nombre . " no gano ninguna partida \n";
+            }
+            else{
+                mostrarPartida(($indicePartidaGanadora + 1));
+            }
 
         break;
         case '5': 
