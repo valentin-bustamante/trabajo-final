@@ -201,6 +201,28 @@ function estadisticasJugador($nombre, $arreglo){
     return $stats;
 }
 
+/**
+ * FUNCION 10 solicita al usuario el nombre de un jugador y retorna el nombre en minúsculas.
+ * @return STRING
+ * **/
+function nombreMinusculas(){
+    //STRING $nombreMinusculas, $nombre
+    //BOOLEAN $esValido
+    $nombreMinusculas = "";
+    $esValido = false;
+    do{
+    echo"Ingrese el nombre de usuario de un jugador: \n";
+    $nombre = trim(fgets(STDIN));
+    if(preg_match('/^[a-zA-Z]/', $nombre)){ //Analizo si el nombre comienza con una letra de la A, a la Z.
+         $nombreMinusculas = strtolower($nombre); //Convierto el string en minusculas.
+         $esValido = true;
+       } else {
+         echo"El nombre debe comenzar con una letra !Intentelo de nuevo!\n";
+       }
+    } while(!$esValido);
+return $nombreMinusculas;
+}
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
