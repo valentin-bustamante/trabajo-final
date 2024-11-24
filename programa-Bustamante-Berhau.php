@@ -139,15 +139,12 @@ function primerPartidaGanada($arreglo, $nombre){
         $i++;
 
     }
-
     return $resultado;
-
-
 }
 
 /**
- * FUNCION 9 que dada la colección de par das y el nombre de un jugador, retorne el resumen del jugador
- * @return STRING
+ * FUNCION 9: que dada la colección de par das y el nombre de un jugador, retorne el resumen del jugador
+ * @return array
  * **/
 function estadisticasJugador($nombre, $arreglo){
     //array $stats
@@ -158,6 +155,7 @@ function estadisticasJugador($nombre, $arreglo){
     $totalPartidas = 0;
     $totalPuntos = 0;
     $victorias = 0; 
+    $porcentajeVictorias = 0;
     $intento1 = 0;
     $intento2 = 0;
     $intento3 = 0;
@@ -186,19 +184,21 @@ function estadisticasJugador($nombre, $arreglo){
       }
     }
   }
-$porcentajeVictorias = ($victorias * 100) / $totalPartidas; 
-$stats["jugador"] = $nombre;
-$stats["partidas"] = $totalPartidas;
-$stats["puntajeTotal"] = $totalPuntos;
-$stats["victorias"] = $victorias;
-$stats["porcentajeVictorias"] = $porcentajeVictorias;
-$stats["intento1"] = $intento1;
-$stats["intento2"] = $intento2;
-$stats["intento3"] = $intento3;
-$stats["intento4"] = $intento4;
-$stats["intento5"] = $intento5;
-$stats["intento6"] = $intento6;
-return $stats;
+    if ($totalPartidas > 0) {
+        $porcentajeVictorias = ($victorias * 100) / $totalPartidas;
+    } 
+    $stats["jugador"] = $nombre;
+    $stats["partidas"] = $totalPartidas;
+    $stats["puntajeTotal"] = $totalPuntos;
+    $stats["victorias"] = $victorias;
+    $stats["porcentajeVictorias"] = $porcentajeVictorias;
+    $stats["intento1"] = $intento1;
+    $stats["intento2"] = $intento2;
+    $stats["intento3"] = $intento3;
+    $stats["intento4"] = $intento4;
+    $stats["intento5"] = $intento5;
+    $stats["intento6"] = $intento6;
+    return $stats;
 }
 
 /**************************************/
@@ -250,7 +250,24 @@ do {
 
         break;
         case '5': 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 3
+            echo"ingrese el nombre de un jugador para ver sus estadisticas: ";
+            $name = trim(fgets(STDIN));
+            $estadisticas = estadisticasJugador($name, $partidas);
+            echo" \n *********************************** \n";
+            echo"Jugador: " . $estadisticas["jugador"] . "\n";
+            echo"Partidas: " . $estadisticas["partidas"] . "\n";
+            echo"Puntaje Total: " . $estadisticas["puntajeTotal"] . "\n";
+            echo"Victorias: " . $estadisticas["victorias"] . "\n";
+            echo"Porcentaje Victorias: " . $estadisticas["porcentajeVictorias"] . "\n";
+            echo"Adivinadas: \n";
+            echo"Intento 1: " . $estadisticas["intento1"] . "\n";
+            echo"Intento 2: " . $estadisticas["intento2"] . "\n";
+            echo"Intento 3: " . $estadisticas["intento3"] . "\n";
+            echo"Intento 4: " . $estadisticas["intento4"] . "\n";
+            echo"Intento 5: " . $estadisticas["intento5"] . "\n";
+            echo"Intento 6: " . $estadisticas["intento6"] . "\n";
+            echo"*********************************** \n";
+
 
         break;
         case '6': 
