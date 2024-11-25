@@ -223,6 +223,28 @@ function nombreMinusculas(){
 return $nombreMinusculas;
 }
 
+/**
+ * FUNCION 11:
+ */
+
+ function ordenamiento($partidaA, $partidaB){
+    if ($partidaA["jugador"] < $partidaB["jugador"]) {
+        $orden = - 1;
+    }
+    elseif ($partidaB["jugador"] < $partidaA["jugador"]) {
+        $orden = 1;
+    }
+    else{
+        if ($partidaA["palabraWordix"] < $partidaB["palabraWordix"]) {
+            $orden = -1;
+        }
+        else {
+            $orden = 1;
+        }
+    }
+    return $orden;
+ }
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
@@ -306,7 +328,9 @@ do {
 
         break;
         case '6': 
-            
+
+            uasort($partidas, 'ordenamiento');
+            print_r($partidas);
 
         break;
         case '7': 
