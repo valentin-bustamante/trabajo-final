@@ -60,7 +60,7 @@ return $coleccionPartidas;
   */
 
 function seleccionarOpcion(){
-    echo"MENU \n\n";
+    echo"\n\n  MENU \n\n";
     echo"1- Jugar al wordix con una palabra elegida \n";
     echo"2- Jugar al wordix con una palabra aleatoria \n";
     echo"3- Mostrar una partida \n";
@@ -85,19 +85,19 @@ function seleccionarOpcion(){
  * @param INT $numPartida
  */
 
-function mostrarPartida($numPartida){
+ function mostrarPartida($arreglo,$numPartida){
     $indice = $numPartida - 1;
-    $partidas = cargarPartidas();
+    
 
-    echo" \n *********************************** \n";
-    echo"PARTIDA WORDIX " . $numPartida . ": palabra " . $partidas[$indice]["palabraWordix"] . "\n";
-    echo"jugador: " . $partidas[$indice]["jugador"] . "\n" ;
-    echo"puntaje: " . $partidas[$indice]["puntaje"] . " puntos \n";
-    if ($partidas[$indice]["intentos"] > 6) {
+    echo" \n*********************************** \n";
+    echo"PARTIDA WORDIX " . $numPartida . ": palabra " . $arreglo[$indice]["palabraWordix"] . "\n";
+    echo"jugador: " . $arreglo[$indice]["jugador"] . "\n" ;
+    echo"puntaje: " . $arreglo[$indice]["puntaje"] . " puntos \n";
+    if ($arreglo[$indice]["intentos"] > 6) {
         echo"intento: no adivino la palabra \n";
     }
     else {
-        echo"intento: adivino la palabra en " . $partidas[$indice]["intentos"] . " intentos \n" ;
+        echo"intento: adivino la palabra en " . $arreglo[$indice]["intentos"] . " intentos \n" ;
     }
     echo"*********************************** \n";
 }
@@ -124,7 +124,7 @@ function agregarPalabra($arreglo, $palabra){
  */
 
 function primerPartidaGanada($arreglo, $nombre){
-    $partidas = cargarPartidas();
+    $partidas = $arreglo;
     $resultado = -1;
     $encontrado = false;
     $elementos = count($partidas);
@@ -213,7 +213,7 @@ function nombreMinusculas(){
     $nombreMinusculas = "";
     $esValido = false;
     do{
-    echo"Ingrese el nombre de usuario de un jugador: \n";
+    echo"Ingrese un nombre para jugar a wordix: \n";
     $nombre = trim(fgets(STDIN));
     if(preg_match('/^[a-zA-Z]/', $nombre)){ //Analizo si el nombre comienza con una letra de la A, a la Z.
          $nombreMinusculas = strtolower($nombre); //Convierto el string en minusculas.
@@ -225,13 +225,42 @@ function nombreMinusculas(){
 return $nombreMinusculas;
 }
 
+/**
+ * FUNCION 11:
+ */
+
+ function ordenamiento($partidaA, $partidaB){
+    if ($partidaA["jugador"] < $partidaB["jugador"]) {
+        $orden = - 1;
+    }
+    elseif ($partidaB["jugador"] < $partidaA["jugador"]) {
+        $orden = 1;
+    }
+    else{
+        if ($partidaA["palabraWordix"] < $partidaB["palabraWordix"]) {
+            $orden = -1;
+        }
+        else {
+            $orden = 1;
+        }
+    }
+    return $orden;
+ }
+
 /**************************************/
 /*********** PROGRAMA PRINCIPAL *******/
 /**************************************/
 
 //Declaración de variables:
+//INT
+//FLOAT
+//STRING
+//BOLEAN
+//ARRAY
 
 //Inicialización de variables:
+$palabras = [];
+$partidas = [];
 $palabras = cargarColeccionPalabras();
 $partidas = cargarPartidas();
 
@@ -284,14 +313,20 @@ do {
             
         break;
         case '2': 
-            //completar qué secuencia de pasos ejecutar si el usuario elige la opción 2
+           
+            $elementos = count($palabras);
+            echo"has elegido jugar a wordix con una palabra aleatoria, mucha suerte :) \n";
+            $usuario = nombreMinusculas();
+            $partida = jugarWordix(($palabras[rand(0, ($elementos - 1))]), $usuario);
+            $partidas[] = $partida;
+            print_r($partida);
 
         break;
         case '3': 
             $elementos = count($partidas);
             echo"ingrese un numero de partida para mostrar la misma por pantalla: ";
             $numero = solicitarNumeroEntre(1, $elementos);
-           mostrarPartida($numero);
+           mostrarPartida($partidas, $numero);
         break;
         case '4': 
             echo"ingrese el nombre del jugador del cual desea visualizar su partida: ";
@@ -301,7 +336,7 @@ do {
                 echo"el jugador " . $nombre . " no gano ninguna partida \n";
             }
             else{
-                mostrarPartida(($indicePartidaGanadora + 1));
+                mostrarPartida($partidas, ($indicePartidaGanadora + 1));
             }
 
         break;
@@ -309,7 +344,7 @@ do {
             echo"ingrese el nombre de un jugador para ver sus estadisticas: ";
             $name = trim(fgets(STDIN));
             $estadisticas = estadisticasJugador($name, $partidas);
-            echo" \n *********************************** \n";
+            echo" \n*********************************** \n";
             echo"Jugador: " . $estadisticas["jugador"] . "\n";
             echo"Partidas: " . $estadisticas["partidas"] . "\n";
             echo"Puntaje Total: " . $estadisticas["puntajeTotal"] . "\n";
@@ -328,12 +363,15 @@ do {
         break;
         case '6': 
             
+            uasort($partidas, 'ordenamiento');
+            print_r($partidas);
 
         break;
         case '7': 
             echo"usted a elegido agregar una palabra a wordix :) \n";
             $nuevaPalabra = leerPalabra5Letras();
             $palabras = agregarPalabra($palabras, $nuevaPalabra);
+            echo"palabra agregada con exito";
 
         break;     
     }
