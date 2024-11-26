@@ -16,7 +16,7 @@ Bustamante Valentin - FAI-5495 - TUDW - vbedits333@gmail.com - valentin-bustaman
 /**************************************/
 
 /**
- * Obtiene una colección de palabras
+ * FUNCION 1: Obtiene una colección de palabras 
  * @return array
  */
 function cargarColeccionPalabras()
