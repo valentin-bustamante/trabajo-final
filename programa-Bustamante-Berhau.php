@@ -315,11 +315,34 @@ do {
         case '2': 
            
             $elementos = count($palabras);
-            echo"has elegido jugar a wordix con una palabra aleatoria, mucha suerte :) \n";
-            $usuario = nombreMinusculas();
-            $partida = jugarWordix(($palabras[rand(0, ($elementos - 1))]), $usuario);
+            echo "Has elegido jugar a Wordix con una palabra aleatoria, ¡mucha suerte! :)\n";
+            $usuario = nombreMinusculas(); // Obtener el nombre del jugador en minúsculas
+
+            $palabraElegida = rand(0, $elementos - 1); // Seleccionar una palabra aleatoria
+            $i = 0;
+            $condicion = false;
+
+            // Verificar que la palabra no haya sido utilizada por el jugador
+            while ($i < count($partidas) && !$condicion) {
+                
+                if ($partidas[$i]["jugador"] === $usuario && $partidas[$i]["palabraWordix"] === $palabras[$palabraElegida]) {
+                    // Si la palabra ya fue utilizada, selecciona otra y reinicia la búsqueda
+                    $palabraElegida = rand(0, $elementos - 1);
+                    $i = 0; // Reiniciar la búsqueda desde el principio
+                } else {
+                    $i++; // Continuar revisando partidas anteriores
+                }
+            }
+
+            // Jugar Wordix con la palabra elegida
+            $partida = jugarWordix($palabras[$palabraElegida], $usuario);
+
+            // Guardar la nueva partida en el historial
             $partidas[] = $partida;
+
+            // Mostrar los detalles de la partida
             print_r($partida);
+
 
         break;
         case '3': 
