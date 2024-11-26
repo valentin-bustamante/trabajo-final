@@ -271,14 +271,40 @@ do {
     
     switch ($opcion) {
         case '1': 
-            $elementos = count($palabras);
-            $usuario = nombreMinusculas();
-            echo"ingrese un numero para poder jugar, dicho numero representa la palabra que se usara para jugar: \n";
+            $i = 0;
+            $condicion = false;
+            $elementos = count($palabras); // Cantidad de palabras disponibles
+            $usuario = nombreMinusculas(); // Obtener el nombre del jugador en minúsculas
+            
+            echo "Ingrese un número para poder jugar. Dicho número representa la palabra que se usará para jugar:\n";
             $numeroElegido = solicitarNumeroEntre(1, $elementos);
-           
-            $partida = jugarWordix(($palabras[($numeroElegido - 1)]), $usuario);
+            $palabraElegida = $numeroElegido - 1; // Convertir el número a índice de arreglo
+            
+            // Verificar si la palabra ya fue utilizada por el jugador
+            while ($i < $elementos && !$condicion) {
+                if (
+                    isset($partidas[$i]) && // Validar que exista el índice en el array
+                    $usuario == $partidas[$i]["jugador"] && 
+                    $palabras[$palabraElegida] == $partidas[$i]["palabraWordix"]
+                ) {
+                    echo "Debe ingresar otro número, ya que la palabra elegida ya fue utilizada:\n";
+                    $nuevoNumero = solicitarNumeroEntre(1, $elementos);
+                    $palabraElegida = $nuevoNumero - 1; // Actualizar la palabra elegida
+                    $i = 0; // Reiniciar la búsqueda desde el principio
+                } else {
+                    $i++;
+                }
+            }
+            
+            // Iniciar la partida con la palabra seleccionada
+            $partida = jugarWordix($palabras[$palabraElegida], $usuario);
+            
+            // Guardar la nueva partida en el historial
             $partidas[] = $partida;
+            
+            // Mostrar los detalles de la partida
             print_r($partida);
+            
         break;
         case '2': 
             $elementos = count($palabras);
