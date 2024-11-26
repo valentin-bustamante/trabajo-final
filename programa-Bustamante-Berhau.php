@@ -296,7 +296,7 @@ do {
             $palabraElegida = $numeroElegido - 1; // Convertir el número a índice de arreglo
             
             // Verificar si la palabra ya fue utilizada por el jugador
-            while ($i < $elementos && !$condicion) {
+            while ($i < $elementos && !$condicion) { //Chequeamos que la palabra no se haya repetido
                 if (
                     isset($partidas[$i]) && // Validar que exista el índice en el array
                     $usuario == $partidas[$i]["jugador"] && 
@@ -331,7 +331,7 @@ do {
             // Verificar que la palabra no haya sido utilizada por el jugador
             while ($i < count($partidas) && !$condicion) {
                 
-                if ($partidas[$i]["jugador"] === $usuario && $partidas[$i]["palabraWordix"] === $palabras[$palabraElegida]) {
+                if ($partidas[$i]["jugador"] === $usuario && $partidas[$i]["palabraWordix"] === $palabras[$palabraElegida]) { //Chequeamos que la palabra no se haya repetido
                     // Si la palabra ya fue utilizada, selecciona otra y reinicia la búsqueda
                     $palabraElegida = rand(0, $elementos - 1);
                     $i = 0; // Reiniciar la búsqueda desde el principio
@@ -345,10 +345,6 @@ do {
 
             // Guardar la nueva partida en el historial
             $partidas[] = $partida;
-
-            // Mostrar los detalles de la partida
-            print_r($partida);
-
 
         break;
         case '3': 
@@ -388,7 +384,6 @@ do {
             echo"Intento 6: " . $estadisticas["intento6"] . "\n";
             echo"*********************************** \n";
 
-
         break;
         case '6': 
             
@@ -397,7 +392,6 @@ do {
 
           // Muestra el arreglo ordenado
             print_r($partidas);
-
 
         break;
         case '7': 

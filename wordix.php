@@ -27,10 +27,13 @@ const ESTADO_LETRA_PERTENECE = "pertenece";
 /**************************************/
 
 /**
- *  ****COMPLETAR*****
+ * FUNCION 5(programa<Apellidos>):
+ * Funcion valida un numero que este dentro de un rango min y max
+ * @param INT $min
+ * @param INT $max
+ * @return INT
  */
-function solicitarNumeroEntre($min, $max)
-{
+function solicitarNumeroEntre($min, $max) {
     //int $numero
     
     $numero = trim(fgets(STDIN));
@@ -38,7 +41,7 @@ function solicitarNumeroEntre($min, $max)
     if (is_numeric($numero)) { //determina si un string es un número. puede ser float como entero.
         $numero  = $numero * 1; //con esta operación convierto el string en número.
     }
-    while (!(is_numeric($numero) && (($numero == (int)$numero) && ($numero >= $min && $numero <= $max)))) {
+    while (!(is_numeric($numero) && (($numero == (int)$numero) && ($numero >= $min && $numero <= $max)))) { //Frena una vez que sea un numero, sea entero y este dentro del rango min y max.
         echo "Debe ingresar un número entre " . $min . " y " . $max . ": ";
         $numero = trim(fgets(STDIN));
         if (is_numeric($numero)) {
@@ -120,7 +123,8 @@ function escribirSegunEstado($texto, $estado)
 }
 
 /**
- * ****COMPLETAR*****
+ * Funcion que imprime un mensaje de bienvenida al usuario pintado de amarillo
+ * @param $usuario
  */
 function escribirMensajeBienvenida($usuario)
 {
@@ -133,41 +137,45 @@ function escribirMensajeBienvenida($usuario)
 
 
 /**
- * ****COMPLETAR*****
+ * Funcion que determina si la palabra es valida
+ * @param STRING $string
+ * @return BOOLEAN
  */
 function esPalabra($cadena)
 {
-    //int $cantCaracteres, $i, boolean $esLetra
-    $cantCaracteres = strlen($cadena);
+    //int $cantCaracteres, $i,
+    //boolean $esLetra
+    $cantCaracteres = strlen($cadena); //Cuenta la cantidad de caracteres
     $esLetra = true;
     $i = 0;
     while ($esLetra && $i < $cantCaracteres) {
-        $esLetra =  ctype_alpha($cadena[$i]);
+        $esLetra =  ctype_alpha($cadena[$i]); //ctype_alpha: Chequea si contiene solamente caracteres alfabeticos
         $i++;
     }
     return $esLetra;
 }
 
 /**
- *  ****COMPLETAR*****
+ * FUNCION 4(programa<Apellidos>): Funcion que pide una palabra de 5 letras y la convierte en mayuscula
+ * @return STRING
  */
 function leerPalabra5Letras()
 {
     //string $palabra
     echo "Ingrese una palabra de 5 letras: ";
     $palabra = trim(fgets(STDIN));
-    $palabra  = strtoupper($palabra);
+    $palabra  = strtoupper($palabra); //Convierto la palabra en mayusc.
 
-    while ((strlen($palabra) != 5) || !esPalabra($palabra)) {
+    while ((strlen($palabra) != 5) || !esPalabra($palabra)) { 
         echo "Debe ingresar una palabra de 5 letras:";
-        $palabra = strtoupper(trim(fgets(STDIN)));
+        $palabra = strtoupper(trim(fgets(STDIN))); //Convierto la palabra en mayusc.
     }
     return $palabra;
 }
 
 
 /**
- * Inicia una estructura de datos Teclado. La estructura es de tipo: ¿Indexado, asociativo o Multidimensional?
+ * Inicia una estructura de datos Teclado. La estructura es de tipo: Asociativo
  *@return array
  */
 function iniciarTeclado()
