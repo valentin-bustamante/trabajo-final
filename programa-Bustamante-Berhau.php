@@ -71,7 +71,7 @@ function seleccionarOpcion(){
     echo"6- Mostrar listado de partidas ordenadas por jugador y por palabra \n";
     echo"7- Agregar una palabra de 5 letras a Wordix \n";
     echo"8- Salir \n";
-    echo"Opcion >>>: \n";
+    echo"Opcion >>>:";
 
     $opcion = solicitarNumeroEntre(1, 8); //Llamamos a la funcion (solicitarNumeroEntre) y verifica si es correcto el numero si no vuelve a pedir el numero.
 
@@ -218,7 +218,7 @@ function nombreMinusculas(){
     $nombreMinusculas = "";
     $esValido = false;
     do{
-    echo"Ingrese un nombre para jugar a wordix: \n";
+    echo"Ingrese un nombre de usuario: \n";
     $nombre = trim(fgets(STDIN));
     if(preg_match('/^[a-zA-Z]/', $nombre) && strlen($nombre) > 0){ //Analizo si el nombre comienza con una letra de la A, a la Z, Y que el nombre tenga mas de una letra
          $nombreMinusculas = strtolower($nombre); //Convierto el string en minusculas.
@@ -255,11 +255,11 @@ return $nombreMinusculas;
     return $orden;
  }
  
-/**  FUNCION 11: Una función sin retorno que, dada una colección de par das, muestre la colección de par das ordenada
- por el nombre del jugador y por la palabra.
- * @param ARRAY $arreglo  
+/**  FUNCION 11: Una función sin retorno que, dada una colección de par das, muestre la colección de par das ordenada por el nombre del jugador y por la palabra.
+ * @param ARRAY $arreglo 
+ * @return ""
  * **/
-function ordenar($arreglo){
+function ordenar(&$arreglo){
     uasort($arreglo, 'ordenamiento'); //Funcion que ordena alfabeticamente las partidas
 }
 
@@ -359,7 +359,7 @@ do {
         break;
         case '4': 
             echo"Ingrese el nombre del jugador del cual desea visualizar su partida: \n";
-            $nombre = trim(fgets(STDIN));
+            $nombre = nombreMinusculas();
             $indicePartidaGanadora = primerPartidaGanada($partidas , $nombre);
             if ($indicePartidaGanadora == -1) {
                 echo"El jugador " . $nombre . " no gano ninguna partida \n";
@@ -371,7 +371,7 @@ do {
         break;
         case '5': 
             echo"Ingrese el nombre de un jugador para ver sus estadisticas: \n";
-            $name = trim(fgets(STDIN));
+            $name = nombreMinusculas();
             $estadisticas = estadisticasJugador($name, $partidas);
             echo" \n*********************************** \n";
             echo"Jugador: " . $estadisticas["jugador"] . "\n";
@@ -392,7 +392,12 @@ do {
         break;
         case '6': 
             
-            print_r(ordenar($partidas)); //Imprimimos las partidas ordenadas
+           // Llama a la función y el arreglo será modificado directamente
+            ordenar($partidas);
+
+          // Muestra el arreglo ordenado
+            print_r($partidas);
+
 
         break;
         case '7': 
