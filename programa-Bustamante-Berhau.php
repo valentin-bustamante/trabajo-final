@@ -62,16 +62,19 @@ return $coleccionPartidas;
 
 function seleccionarOpcion(){
     //INT $opcion
-    echo"\n\n  MENU \n\n";
-    echo"1- Jugar al wordix con una palabra elegida \n";
-    echo"2- Jugar al wordix con una palabra aleatoria \n";
-    echo"3- Mostrar una partida \n";
-    echo"4- Mostrar la primer partida ganadora \n";
-    echo"5- Mostrar resumen de Jugador \n";
-    echo"6- Mostrar listado de partidas ordenadas por jugador y por palabra \n";
-    echo"7- Agregar una palabra de 5 letras a Wordix \n";
-    echo"8- Salir \n";
-    echo"Opcion >>>:";
+    echo "\n=====================================\n";
+    echo "               MENÚ PRINCIPAL        \n";
+    echo "=====================================\n";
+    echo "1- Jugar al wordix con una palabra elegida\n";
+    echo "2- Jugar al wordix con una palabra aleatoria\n";
+    echo "3- Mostrar una partida\n";
+    echo "4- Mostrar la primer partida ganadora\n";
+    echo "5- Mostrar resumen de Jugador\n";
+    echo "6- Mostrar listado de partidas ordenadas por jugador y por palabra\n";
+    echo "7- Agregar una palabra de 5 letras a Wordix\n";
+    echo "8- Salir\n";
+    echo "=====================================\n";
+    echo "Por favor, elige una opción (1-8): ";
 
     $opcion = solicitarNumeroEntre(1, 8); //Llamamos a la funcion (solicitarNumeroEntre) y verifica si es correcto el numero si no vuelve a pedir el numero.
 
@@ -212,23 +215,33 @@ function estadisticasJugador($nombre, $arreglo){
  * FUNCION 10 solicita al usuario el nombre de un jugador y retorna el nombre en minúsculas.
  * @return STRING
  * **/
-function nombreMinusculas(){
-    //STRING $nombreMinusculas, $nombre
-    //BOOLEAN $esValido
+function nombreMinusculas() {
+    // STRING $nombreMinusculas, $nombre
+    // BOOLEAN $esValido
     $nombreMinusculas = "";
     $esValido = false;
-    do{
-    echo"Ingrese un nombre de usuario: \n";
-    $nombre = trim(fgets(STDIN));
-    if(preg_match('/^[a-zA-Z]/', $nombre) && strlen($nombre) > 0){ //Analizo si el nombre comienza con una letra de la A, a la Z, Y que el nombre tenga mas de una letra
-         $nombreMinusculas = strtolower($nombre); //Convierto el string en minusculas.
-         $esValido = true;
-       } else {
-         echo"El nombre debe comenzar con una letra !Intentelo de nuevo!\n";
-       }
-    } while(!$esValido);
-return $nombreMinusculas;
+    do {
+        echo "Ingrese un nombre de usuario (3 a 10 caracteres, comenzando con una letra): \n";
+        $nombre = trim(fgets(STDIN));
+        // Validar que el nombre comienza con una letra y tiene entre 3 y 10 caracteres
+        if (preg_match('/^[a-zA-Z]/', $nombre) && strlen($nombre) >= 3 && strlen($nombre) <= 10) {
+            $nombreMinusculas = strtolower($nombre); // Convertir a minúsculas
+            $esValido = true;
+        } else {
+            // Determinar el mensaje de error
+            if (!preg_match('/^[a-zA-Z]/', $nombre)) {
+                echo "El nombre debe comenzar con una letra. ¡Intentelo de nuevo!\n";
+            } elseif (strlen($nombre) < 3) {
+                echo "El nombre debe tener al menos 3 caracteres. ¡Intentelo de nuevo!\n";
+            } elseif (strlen($nombre) > 10) {
+                echo "El nombre no debe exceder los 10 caracteres. ¡Intentelo de nuevo!\n";
+            }
+        }
+    } while (!$esValido);
+
+    return $nombreMinusculas;
 }
+
 
 /** FUNCION extra: Creacion de la funcion de ordenamiento para el uasort (compara nombre y/o palabras para ordenar alfabeticamente)
  * @param ARRAY $partidaA //En el caso de que partida A vaya primero retorna -1
@@ -291,7 +304,9 @@ do {
             $elementos = count($palabras); // Cantidad de palabras disponibles
             $usuario = nombreMinusculas(); // Obtener el nombre del jugador en minúsculas
             
-            echo "Ingrese un número para poder jugar. Dicho número representa la palabra que se usará para jugar:\n";
+            echo "\n🌟 ¡Bienvenido a la sección de juego con una palabra elegida! 🌟\n";
+            echo "Por favor, ingresa un número (entre 1 y " . $elementos . ") para seleccionar la palabra con la que deseas jugar: \n";
+
             $numeroElegido = solicitarNumeroEntre(1, $elementos);
             $palabraElegida = $numeroElegido - 1; // Convertir el número a índice de arreglo
             
@@ -302,7 +317,8 @@ do {
                     $usuario == $partidas[$i]["jugador"] && 
                     $palabras[$palabraElegida] == $partidas[$i]["palabraWordix"]
                 ) {
-                    echo "Debe ingresar otro número, ya que la palabra elegida ya fue utilizada:\n";
+                    echo "\n❌ ¡Oh no! La palabra seleccionada ya ha sido utilizada. Por favor, elige un número diferente para continuar. ❌: \n";
+
                     $nuevoNumero = solicitarNumeroEntre(1, $elementos);
                     $palabraElegida = $nuevoNumero - 1; // Actualizar la palabra elegida
                     $i = 0; // Reiniciar la búsqueda desde el principio
@@ -316,12 +332,14 @@ do {
             
             // Guardar la nueva partida en el historial
             $partidas[] = $partida;
+            echo"\npartida guardada con exito ✔️";
             
         break;
         case '2': 
            
             $elementos = count($palabras);
-            echo "Has elegido jugar a Wordix con una palabra aleatoria, ¡mucha suerte! :)\n";
+            echo "\n🎲 ¡Te has decidido por jugar con una palabra aleatoria! ¡Buena suerte! 🍀\n";
+
             $usuario = nombreMinusculas(); // Obtener el nombre del jugador en minúsculas
 
             $palabraElegida = rand(0, $elementos - 1); // Seleccionar una palabra aleatoria
@@ -345,11 +363,13 @@ do {
 
             // Guardar la nueva partida en el historial
             $partidas[] = $partida;
+            echo"\npartida guardada con exito ✔️";
 
         break;
         case '3': 
             $elementos = count($partidas);
-            echo"Ingrese un numero de partida para mostrar la misma por pantalla: \n";
+            echo "\n🔍 Ingrese el número de la partida que deseas ver (de 1 a " . $elementos . "): \n";
+
             $numero = solicitarNumeroEntre(1, $elementos);
            mostrarPartida($partidas, $numero);
         break;
@@ -358,7 +378,8 @@ do {
             $nombre = nombreMinusculas();
             $indicePartidaGanadora = primerPartidaGanada($partidas , $nombre);
             if ($indicePartidaGanadora == -1) {
-                echo"El jugador " . $nombre . " no gano ninguna partida \n";
+                echo "\n⚠️ El jugador " . $nombre . " aún no ha ganado ninguna partida. ¡Ánimo, sigue intentándolo! 💪\n";
+
             }
             else{
                 mostrarPartida($partidas, ($indicePartidaGanadora + 1));
@@ -369,25 +390,26 @@ do {
             echo"Ingrese el nombre de un jugador para ver sus estadisticas: \n";
             $name = nombreMinusculas();
             $estadisticas = estadisticasJugador($name, $partidas);
-            echo" \n*********************************** \n";
-            echo"Jugador: " . $estadisticas["jugador"] . "\n";
-            echo"Partidas: " . $estadisticas["partidas"] . "\n";
-            echo"Puntaje Total: " . $estadisticas["puntajeTotal"] . "\n";
-            echo"Victorias: " . $estadisticas["victorias"] . "\n";
-            echo"Porcentaje Victorias: " . $estadisticas["porcentajeVictorias"] . "\n";
-            echo"Adivinadas: \n";
-            echo"Intento 1: " . $estadisticas["intento1"] . "\n";
-            echo"Intento 2: " . $estadisticas["intento2"] . "\n";
-            echo"Intento 3: " . $estadisticas["intento3"] . "\n";
-            echo"Intento 4: " . $estadisticas["intento4"] . "\n";
-            echo"Intento 5: " . $estadisticas["intento5"] . "\n";
-            echo"Intento 6: " . $estadisticas["intento6"] . "\n";
-            echo"*********************************** \n";
+            echo "\n🔢 Aquí tienes el resumen de tus estadísticas, " . $estadisticas["jugador"] . ":\n";
+            echo "  - Partidas jugadas: " . $estadisticas["partidas"] . "\n";
+            echo "  - Puntaje total acumulado: " . $estadisticas["puntajeTotal"] . "\n";
+            echo "  - Victorias: " . $estadisticas["victorias"] . "\n";
+            echo "  - Porcentaje de victorias: " . $estadisticas["porcentajeVictorias"] . "%\n";
+            echo "\n🎯 Resultados por intento:\n";
+            echo "  - Intento 1: " . $estadisticas["intento1"] . "\n";
+            echo "  - Intento 2: " . $estadisticas["intento2"] . "\n";
+            echo "  - Intento 3: " . $estadisticas["intento3"] . "\n";
+            echo "  - Intento 4: " . $estadisticas["intento4"] . "\n";
+            echo "  - Intento 5: " . $estadisticas["intento5"] . "\n";
+            echo "  - Intento 6: " . $estadisticas["intento6"] . "\n";
+            echo "\n🛠️ ¡Sigue mejorando tus habilidades! 🏆\n";
+            
 
         break;
         case '6': 
             
            // Llama a la función y el arreglo será modificado directamente
+            echo "\n🔄 Ordenando las partidas... \n";
             ordenar($partidas);
 
           // Muestra el arreglo ordenado
@@ -395,12 +417,16 @@ do {
 
         break;
         case '7': 
-            echo"Usted a elegido agregar una palabra a wordix :) \n";
+            echo "\n📝 ¡Es hora de agregar una nueva palabra al juego! 📝\n";
+            echo "Por favor, ingresa una palabra de 5 letras para añadirla a Wordix.\n";
             $nuevaPalabra = leerPalabra5Letras();
             $palabras = agregarPalabra($palabras, $nuevaPalabra);
-            echo"Palabra agregada con exito\n";
+            echo"Palabra agregada con exito ✔️\n";
 
-        break;     
+        break; 
+        case '8': 
+            echo "\n🚪 ¡Gracias por jugar! ¡Hasta la próxima! 🌟\n";
+        break;    
     }
 } while ($opcion != 8);
 
