@@ -1,26 +1,26 @@
-# trabajo-final
+# Trabajo Final
 trabajo final de introducción a la programación
 
-# materia 2024
+# Materia 2024
 
-introduccion a la programacion 
-tecnicatura universitaria en desarrollo web
-facultad de informatica
-universidad nacional de comahue
+Introduccion a la programacion 
+Tecnicatura universitaria en desarrollo web
+Facultad de informatica
+Universidad Nacional de Comahue
 
-# integrantes del grupo
+# Integrantes del grupo
 
 **valentin bustamante** legajo FAI-5495 - mail: vbedits333@gmail.com - github: valentin-bustamante
 
 **Gaston Gabriel Berhau** legajo FAI 5585 - mail: gastonn.okk@gmail.com - github: gstNNN
 
-# numero de grupo
+# Numero de grupo
 
-grupo 10
+Grupo 10
 
-# profesores
+# Profesores
 
-luis reynoso
-cristian torres
-maria monserrat
-facundo muñoz
+Luis Reynoso
+Cristian Torres
+Maria Monserrat
+Facundo Muñoz
